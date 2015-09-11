@@ -154,6 +154,10 @@ int MP1Node::introduceSelfToGroup(Address *joinaddr) {
 
 }
 
+
+
+
+
 /**
  * FUNCTION NAME: finishUpThisNode
  *
@@ -218,6 +222,8 @@ bool MP1Node::recvCallBack(void *env, char *data, int size ) {
 	/*
 	 * Your code goes here
 	 */
+     MessageHdr* msg = (MessageHdr*) data;
+        Address *src_addr = (Address*)(msg+1);
 }
 
 /**
