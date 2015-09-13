@@ -223,8 +223,21 @@ bool MP1Node::recvCallBack(void *env, char *data, int size ) {
 	 * Your code goes here
 	 */
      assert(size >= sizeof(MessageHdr));
-     MessageHdr* msg = (MessageHdr*) data;
+
+        MessageHdr* msg = (MessageHdr*) data;
         Address *src_addr = (Address*)(msg+1);
+
+        size -= sizeof(MessageHdr) + sizeof(Address) + 1;
+        data += sizeof(MessageHdr) + sizeof(Address) + 1;
+
+        switch (msg->msgType) {
+                case JOINREQ:
+                        onJoin(src_addr, data, size);
+                        onHeartbeat(src_addr, data, size);
+                        break;
+                case PING:
+                        onHeartbeat(src_addr, data, size);
+                        break;
 }
 
 /**
