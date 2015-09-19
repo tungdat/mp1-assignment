@@ -235,9 +235,22 @@ bool MP1Node::recvCallBack(void *env, char *data, int size ) {
                         onJoin(src_addr, data, size);
                         onHeartbeat(src_addr, data, size);
                         break;
-                case PING:
+                ccase PING: 
                         onHeartbeat(src_addr, data, size);
+                break;
+                case JOINREP:
+                        {
+                        memberNode->inGroup = 1;
+                        stringstream msg;
+                        msg << "JOINREP from " <<  src_addr->getAddress();
+                        msg << " data " << *(long*)(data );
+                        log->LOG(&memberNode->addr, msg.str().c_str());
+                        onHeartbeat(src_addr, data, size);
+                        break;}
+                        default:
+                        log->LOG(&memberNode->addr, "Received other msg");
                         break;
+        }
 }
 
 /**
