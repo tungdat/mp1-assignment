@@ -252,6 +252,12 @@ bool MP1Node::recvCallBack(void *env, char *data, int size ) {
                         break;
         }
 }
+Address AddressFromMLE(MemberListEntry* mle) {
+        Address a;
+        memcpy(a.addr, &mle->id, sizeof(int));
+        memcpy(&a.addr[4], &mle->port, sizeof(short));
+        return a;
+}
 
 /**
  * FUNCTION NAME: nodeLoopOps
